@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon ./src/shared/server/index.js",
-    "dev": "ts-node-dev ./src/shared/server/index.ts"
+    "dev": "ts-node-dev ./src/shared/server/index.ts",
+    "prod": "pm2 start ./dist/shared/server/index.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.10",
