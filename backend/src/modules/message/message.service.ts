@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { AppError } from "../../shared/errors/AppError";
 import { userModel } from "../user/user.interfaces";
 import { IMessage, messageModel } from "./message.interfaces";
 
@@ -8,7 +9,7 @@ class MessageService {
             const toUser = await userModel.findOne({ phoneNumber: toUserPhone })
 
             if (!toUser)
-                throw new Error('Usuário não localizado no banco de dados')
+                throw new AppError('Usuário não localizado no banco de dados')
 
             const createdMessage = await messageModel.create({
                 userId,
@@ -18,7 +19,7 @@ class MessageService {
 
             return createdMessage
         } catch (error) {
-            throw new Error(error.message)
+            throw new AppError(error.message)
         }
     }
 

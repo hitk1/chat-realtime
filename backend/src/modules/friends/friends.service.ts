@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { AppError } from "../../shared/errors/AppError";
 import { userModel } from "../user/user.interfaces";
 import { friendsModel, IFriends } from "./friends.interfaces";
 
@@ -8,7 +9,7 @@ export default class FriendsService {
         try {
             const user = await userModel.findById(me)
             if (!user)
-                throw new Error('Usuário não localizado')
+                throw new AppError('Usuário não localizado')
 
             const friendsIds = await this.getUserIdByPhones(friendPhones)
             const listFriends = await friendsModel.create({
@@ -18,7 +19,7 @@ export default class FriendsService {
 
             return listFriends
         } catch (error) {
-            throw new Error(error.message)
+            throw new AppError(error.message)
         }
     }
 
@@ -31,7 +32,7 @@ export default class FriendsService {
 
             return result
         } catch (error) {
-            throw new Error(`Erro ao recuperar lista de ids de friends: ${error.message}`)
+            throw new AppError(`Erro ao recuperar lista de ids de friends: ${error.message}`)
         }
     }
 
