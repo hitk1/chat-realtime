@@ -1,3 +1,4 @@
+import { AppError } from "../../shared/errors/AppError";
 import { IUser, userModel } from "./user.interfaces";
 
 class UserService {
@@ -10,8 +11,9 @@ class UserService {
         } catch(error){
 
             if(error.message.indexOf('dup key') !== -1)
-                throw new Error('Numero de telefone já cadastrado.')
-            throw new Error(error.message)
+                throw new AppError('Numero de telefone já cadastrado.')
+                
+            throw new AppError(error.message)
         }
     }
 
