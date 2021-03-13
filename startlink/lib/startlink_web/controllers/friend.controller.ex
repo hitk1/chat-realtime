@@ -10,10 +10,10 @@ defmodule StartlinkWeb.FriendController do
   """
   @spec create(%Plug.Conn{}, create_relationship_params) :: %{}
   def create(conn, params) do
-    with {:ok, %{} = relation} <- Startlink.create_friend_relationship(params) do
+    with {:ok, message} <- Startlink.create_friend_relationship(params) do
       conn
       |> put_status(:created)
-      |> render("relatioship_created.json", relationship: relation)
+      |> render("relatioship_created.json", message: message)
     end
   end
 end
