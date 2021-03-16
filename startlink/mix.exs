@@ -20,7 +20,7 @@ defmodule Startlink.MixProject do
   def application do
     [
       mod: {Startlink.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :mongodb, :poolboy]
     ]
   end
 
@@ -43,10 +43,12 @@ defmodule Startlink.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:decimal, "~> 2.0"},
+      {:decimal, "~> 1.5"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:pbkdf2_elixir, "~> 1.3"},
       {:poison, "~> 4.0"},
+      {:mongodb, "~> 0.5.1"},
+      {:poolboy, ">= 0.0.0"}
     ]
   end
 

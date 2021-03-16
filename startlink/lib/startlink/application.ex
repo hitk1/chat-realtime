@@ -6,6 +6,8 @@ defmodule Startlink.Application do
   use Application
 
   def start(_type, _args) do
+    # mongodb_path = Application.get_env(:startlink, :mongodb)[:path]
+    # IO.inspect(mongodb_path)
     children = [
       # Start the Ecto repository
       Startlink.Repo,
@@ -14,9 +16,10 @@ defmodule Startlink.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Startlink.PubSub},
       # Start the Endpoint (http/https)
-      StartlinkWeb.Endpoint
+      StartlinkWeb.Endpoint,
       # Start a worker by calling: Startlink.Worker.start_link(arg)
       # {Startlink.Worker, arg}
+      {Mongo, [name: :mongo, database: "chat", pool_size: 2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

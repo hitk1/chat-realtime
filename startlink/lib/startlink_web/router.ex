@@ -9,6 +9,8 @@ defmodule StartlinkWeb.Router do
     pipe_through :api
 
     post "/user", UserController, :create
+    get "/messages/:user_id", UserController, :get_all_messages
+
     post "/friend", FriendController, :create
   end
 
