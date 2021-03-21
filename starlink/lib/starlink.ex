@@ -5,12 +5,14 @@ defmodule Starlink do
     import Supervisor.Spec, warn: false
 
     children = [
+      {Shared.Repo, []},
       Plug.Adapters.Cowboy.child_spec(
         scheme: :http,
         plug: Starlink.Routes,
         options: [
           dispatch: dispatcher(),
-          port: 3334
+          port: 3334,
+          protocol_options: [idle_timeout: :infinity]
         ]
         )
       ]
