@@ -6,4 +6,5 @@ defmodule Users.Views.User do
       userId: userId
     })
   end
+
 end
