@@ -11,7 +11,7 @@ defmodule Users.Routes.User do
   #Create user Route
   post "/" do
     userId = UserController.create_user(conn)
-    IO.puts("Criou usuario: #{userId}")
+
     conn
     |> send_resp(200, UserView.render("create_user.json", userId))
   end
