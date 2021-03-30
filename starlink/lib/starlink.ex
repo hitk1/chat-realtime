@@ -4,7 +4,11 @@ defmodule Starlink do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
+    alias Users.GenStore.State, as: UserGenState
+
     children = [
+      {Registry, keys: :unique, name: :users},
+      {Registry, keys: :unique, name: :chats},
       {Shared.Repo, []},
       Plug.Adapters.Cowboy.child_spec(
         scheme: :http,
