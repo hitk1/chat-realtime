@@ -8,9 +8,9 @@ defmodule Users.Controllers.User do
 
     with {:ok, %User{} = user} <- CreateUser.call(name, phoneNumber) do
       %{id: userId} = user
-      userId
+      {:ok, userId}
     else
-      _ -> IO.puts("Erro na criação do usuario")
+      {:error, reason} -> {:error, reason}
     end
   end
 end

@@ -1,5 +1,7 @@
 defmodule Users.GenClient do
+  # use GenServer
   require Logger
+
 
   defmodule State do
     @type t :: %__MODULE__{
@@ -13,18 +15,12 @@ defmodule Users.GenClient do
   end
 
   @type state :: State
-  @spec start_link(state) :: any()
-  def start_link(%State{
-    user_id: user_id,
-    name: name,
-    phoneNumber: phoneNumber,
-    pid: pid
-  } = state) do
-    name = get_via_tuple(user_id)
-    GenServer.start_link(Users.GenStore, state, name: name)
+  def start(state) do
+    %{user_id: user_id} = state
+
+    # GenServer.start_link(Users.GenStore, state, name: {:via, Registry, {:user, user_id}})
+    IO.puts(user_id)
+    GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
   end
 
-  defp get_via_tuple(user_id)do
-    {:via, Registry, {:users, user_id}}
-  end
 end

@@ -28,7 +28,8 @@ defmodule Starlink.MixProject do
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:elixir_uuid, "~> 1.2"},
-      {:poison, "~> 4.0"}
+      {:poison, "~> 4.0"},
+      {:gen_registry, "~> 1.0"}
     ]
   end
 end

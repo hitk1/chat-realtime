@@ -5,6 +5,7 @@ defmodule Starlink.Sockets do
   alias Users.Services.CheckUserService
   alias Users.Services.InitUserSession
 
+
   def init(req, _state) do
     state = %{}
     {:cowboy_websocket, req, state}
@@ -21,16 +22,22 @@ defmodule Starlink.Sockets do
         "auth" ->
           %{"phoneNumber" => phoneNumber} = json
 
-          with {:ok, user} <- CheckUserService.call(phoneNumber),
-            {:ok, _}  <- InitUserSession.call(user, self()) do
-              {:reply, {:text, "Autenticado"}, state}
+          with {:ok, user} <- CheckUserService.call(phoneNumber) do
+            case InitUserSession.call(user, self()) do
+              {:ok, ok} -> {:reply, {:text, "Autenticado"}, state}
+              {:error, _} ->{:reply, {:text, "Deu ruim"}, state}
+            end
           else
             reason ->
               IO.inspect(reason)
               {:reply, {:text, "deu ruim"}, state}
           end
+        "get" ->
+          GenServer.call(Users.Registry.via_tuple("d1ae5ae3-5f51-4a67-bf7f-22abd2accfef"), :get_all)
+          |> IO.inspect()
       end
     end
+    {:reply, {:text, "test"}, state}
   end
 
   def websocket_info({:resp_info, message}, state) do

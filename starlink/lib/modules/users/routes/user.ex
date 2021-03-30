@@ -10,10 +10,12 @@ defmodule Users.Routes.User do
 
   #Create user Route
   post "/" do
-    userId = UserController.create_user(conn)
-
-    conn
-    |> send_resp(200, UserView.render("create_user.json", userId))
+    with {:ok, user_id} <- UserController.create_user(conn) do
+      conn
+      |> send_resp(200, UserView.render("create_user.json", user_id))
+    else
+      {:error, _reason} -> conn |> send_resp(200, Poison.encode!(%{success: false, message: "Erro na criação do usuário"}))
+    end
   end
 
   match _ do

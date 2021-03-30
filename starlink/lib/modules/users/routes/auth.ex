@@ -6,7 +6,7 @@ defmodule Users.Routes.Auth do
   plug(:dispatch)
 
   post "/" do
-    %Plug.Conn{ body_params: %{"user" => _user, "password" => _password} } = conn
+    %Plug.Conn{ body_params: %{"phoneNumber" => _phoneNumber} } = conn
 
     conn
     |> send_resp(200, "ok")
