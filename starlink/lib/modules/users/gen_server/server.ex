@@ -1,4 +1,5 @@
 defmodule Users.GenStore do
+
   use GenServer
 
   defmodule State do
@@ -19,6 +20,15 @@ defmodule Users.GenStore do
   def handle_cast({:get_user, user_id}, state) do
     #Here goes the logic to find user and return him
     {:reply, [state]}
+  end
+
+  def handle_cast({:notify_direct_message, %{from: from, message: message}}, state) do
+    %{pid: pid} = state
+    notification = Poison.encode!(%{from: from, message: message })
+
+    pid
+    |> send({:notify_direct_message, notification})
+    {:noreply, state}
   end
 
   def handle_call(:get_all, _from, state) do

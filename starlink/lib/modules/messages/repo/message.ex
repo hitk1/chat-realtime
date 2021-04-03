@@ -21,7 +21,8 @@ defmodule Messages.Repo.Message do
   def changeset(params) do
     %__MODULE__{}
     |> cast(params, @required_params)
+    |> foreign_key_constraint(:from)
+    |> foreign_key_constraint(:to)
     |> validate_required(@required_params)
-    |> IO.inspect()
   end
 end

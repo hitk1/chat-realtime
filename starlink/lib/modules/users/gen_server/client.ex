@@ -2,6 +2,7 @@ defmodule Users.GenClient do
   # use GenServer
   require Logger
 
+  alias Users.Registry, as: UserRegistry
 
   defmodule State do
     @type t :: %__MODULE__{
@@ -18,9 +19,11 @@ defmodule Users.GenClient do
   def start(state) do
     %{user_id: user_id} = state
 
-    # GenServer.start_link(Users.GenStore, state, name: {:via, Registry, {:user, user_id}})
-    IO.puts(user_id)
     GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
+  end
+
+  def direct_notification(from, to, message) do
+    GenServer.cast(UserRegistry.via_tuple(to), {:notify_direct_message, %{from: from, message: message}})
   end
 
 end

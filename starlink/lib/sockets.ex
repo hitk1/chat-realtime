@@ -4,6 +4,7 @@ defmodule Starlink.Sockets do
 
   alias Users.Services.CheckUserService
   alias Users.Services.InitUserSession
+  alias Messages.Services.DirectMessage
 
 
   def init(req, _state) do
@@ -22,6 +23,7 @@ defmodule Starlink.Sockets do
         "auth" ->
           %{"phoneNumber" => phoneNumber} = json
 
+          IO.inspect(self())
           with {:ok, user} <- CheckUserService.call(phoneNumber) do
             case InitUserSession.call(user, self()) do
               {:ok, ok} -> {:reply, {:text, "Autenticado"}, state}
@@ -32,16 +34,32 @@ defmodule Starlink.Sockets do
               IO.inspect(reason)
               {:reply, {:text, "deu ruim"}, state}
           end
-        "get" ->
-          GenServer.call(Users.Registry.via_tuple("d1ae5ae3-5f51-4a67-bf7f-22abd2accfef"), :get_all)
-          |> IO.inspect()
+        "direct"->
+          %{"data" => %{"to" => to_user, "message" => message}, "auth" => from} = json
+
+          with {:ok, message_id} <- DirectMessage.call(from, to_user, message) do
+            # %{id: message_id} = message
+            {:reply, {:text, message_id}, state}
+          else
+            reason ->
+              {:reply, {:text, reason}, state}
+          end
+        _ -> {:reply, {:text, "invalid!"}, state}
       end
     end
-    {:reply, {:text, "test"}, state}
   end
 
   def websocket_info({:resp_info, message}, state) do
+    IO.inspect(message)
     {:reply, {:text, message}, state}
+  end
+
+  def websocket_info({:notify_direct_message, message}, state) do
+    {:reply, {:text, message}, state}
+  end
+
+  def websocket_info({:EXIT, _, _}, state) do
+    {:ok, state}
   end
 
   #Essa função é responsavel por enviar mensagens aos clientes conectados atraves do PID recebido em [websocket_init()] através de -> self()
