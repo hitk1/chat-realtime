@@ -5,12 +5,18 @@ defmodule Starlink.Routes do
   alias Users.Routes.Auth
   alias Users.Routes.User
 
+  forward("/session", to: Auth)
+
   plug Plug.Static, at: "/", from: :starlink
   plug :match
-  plug Plug.Parsers, parsers: [:json], pass: ["application/json"], json_decoder: Jason
+  plug Shared.Plug.Auth, public_path: "/session"
+  plug Plug.Parsers,
+    parsers: [:json],
+    pass: ["application/json"],
+    json_decoder: Jason
+
   plug :dispatch
 
-  forward("/session", to: Auth)
   forward("/users", to: User)
 
   get "/" do

@@ -24,6 +24,7 @@ defmodule Starlink.MixProject do
     [
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.1"},
+      {:jose, "~> 1.10.1"},
       {:credo, "1.5.5"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
