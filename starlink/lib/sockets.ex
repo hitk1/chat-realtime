@@ -16,6 +16,11 @@ defmodule Starlink.Sockets do
     {:ok, state}
   end
 
+  def websocket_handle({:text, "ping"}, state) do
+    Logger.info("ping-pong check!")
+    {:reply, {:text, "pong"}, state}
+  end
+
   def websocket_handle({:text, frame}, state) do
     with {:ok, json} <- Poison.decode(frame) do
 
@@ -58,11 +63,11 @@ defmodule Starlink.Sockets do
     {:reply, {:text, message}, state}
   end
 
+  #Necessário para os casos de assyncronismo
   def websocket_info({:EXIT, _, _}, state) do
     {:ok, state}
   end
 
-  #Essa função é responsavel por enviar mensagens aos clientes conectados atraves do PID recebido em [websocket_init()] através de -> self()
   def websocket_info(info, state) do
     {:reply, {:text, "logando: #{info}"}, state}
   end

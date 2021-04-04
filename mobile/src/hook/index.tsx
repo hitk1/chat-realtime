@@ -1,11 +1,14 @@
 import React from 'react'
 
 import { PhoneProvider } from './phone'
+import { SocketProvider } from './socket'
 
 const AppProvider: React.FC = ({ children }) => {
     return (
         <PhoneProvider>
-            {children}
+            <SocketProvider>
+                {children}
+            </SocketProvider>
         </PhoneProvider>
     )
 }

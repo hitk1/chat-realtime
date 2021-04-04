@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import { IPhoneContext, IUser } from './phone.interfaces'
 
-import api from '../services/api'
+import api from '../../services/api'
 
 const PhoneContext = createContext<IPhoneContext>({} as IPhoneContext)
 
