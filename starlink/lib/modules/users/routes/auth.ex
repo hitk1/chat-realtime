@@ -22,7 +22,8 @@ defmodule Users.Routes.Auth do
   defp prepare_response_with_jwt(phoneNumber) do
     with {:ok, user} <- CheckUserService.call(phoneNumber),
          jwt <- Jwt.create(user) do
-      {:ok, jwt}
+
+      {:ok, Jason.encode!(%{data: jwt})}
     else
       {:error, msg} -> {:unauthorized, msg}
     end

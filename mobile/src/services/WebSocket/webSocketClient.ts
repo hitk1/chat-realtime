@@ -70,7 +70,8 @@ export default (phoneNumber: string): Promise<IWsClientConnection> => {
 
             // const struct = JSON.parse(data) as WsResponse
             // connection.onMessage(struct)
-            const message = data 
+            const message = data
+            console.log(message)
             // connection.onMessage(message) 
         }) 
 

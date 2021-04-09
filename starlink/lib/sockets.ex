@@ -5,6 +5,7 @@ defmodule Starlink.Sockets do
   alias Users.Services.CheckUserService
   alias Users.Services.InitUserSession
   alias Messages.Services.DirectMessage
+  alias Shared.Jwt
 
 
   def init(req, _state) do
@@ -28,17 +29,17 @@ defmodule Starlink.Sockets do
       case json["operation"] do
         "auth" ->
           %{"phoneNumber" => phoneNumber} = json["data"]
-
-          with {:ok, user} <- CheckUserService.call(phoneNumber) do
-            case InitUserSession.call(user, self()) do
-              {:ok, ok} -> {:reply, {:text, "Autenticado"}, state}
-              {:error, _} ->{:reply, {:text, "Deu ruim"}, state}
+          with {:ok, user} <- CheckUserService.call(phoneNumber),
+            jwt <- Jwt.create(user) do
+              case InitUserSession.call(user, self()) do
+                {:ok, _} -> {:reply, {:text, Jason.encode!(%{data: jwt})}, state}
+                {:error, _} -> {:reply, {:text, "Erro na autenticao"}, state}
+              end
+            else
+              reason ->
+                IO.inspect(reason)
+                {:reply, {:text, "Deu ruim"}, state}
             end
-          else
-            reason ->
-              IO.inspect(reason)
-              {:reply, {:text, "deu ruim"}, state}
-          end
         "direct"->
           %{"data" => %{"to" => to_user, "message" => message}, "auth" => from} = json
 

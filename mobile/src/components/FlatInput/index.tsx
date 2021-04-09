@@ -7,7 +7,7 @@ import { colors } from '../../utils/configs';
 import { IInputElementRef, IInputProps, IInputValueRef } from './interfaces';
 import styles from './styles'
 
-const InputText: React.ForwardRefRenderFunction<IInputElementRef, IInputProps> = ({ name, onChangeText, rawValue, ...restInputProps }, ref) => {
+const FlatInput: React.ForwardRefRenderFunction<IInputElementRef, IInputProps> = ({ name, onChangeText, rawValue, ...restInputProps }, ref) => {
     const [isFocused, setIsFocused] = React.useState(false)
     const [isFilled, setIsFilled] = React.useState(false)
 
@@ -73,4 +73,4 @@ const InputText: React.ForwardRefRenderFunction<IInputElementRef, IInputProps> =
     )
 }
 
-export default forwardRef(InputText);
+export default forwardRef(FlatInput);

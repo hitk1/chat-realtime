@@ -8,13 +8,13 @@ defmodule Starlink.Routes do
   forward("/session", to: Auth)
 
   plug Plug.Static, at: "/", from: :starlink
-  plug :match
   plug Shared.Plug.Auth, public_path: "/session"
   plug Plug.Parsers,
     parsers: [:json],
     pass: ["application/json"],
     json_decoder: Jason
 
+  plug :match
   plug :dispatch
 
   forward("/users", to: User)

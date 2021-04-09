@@ -1,3 +1,5 @@
+import { TextInputProps } from "react-native";
+
 export interface IInputValueRef {
     value: string
 }
@@ -7,7 +9,7 @@ export interface IInputElementRef {
     name: string
 }
 
-export interface IInputProps {
+export interface IInputProps extends TextInputProps{
     name: string,
     onChangeText?(text: string): void
     rawValue?: string

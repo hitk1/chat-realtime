@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { Form } from '@unform/mobile'
 import { FormHandles } from '@unform/core'
 
-import InputText from '../../components/InputText'
+import InputText from '../../components/FlatInput'
 
 import { ITextInputProps } from '../../utils/interfaces';
 import styles from './styles'
