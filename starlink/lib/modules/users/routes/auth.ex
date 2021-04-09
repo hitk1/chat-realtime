@@ -2,18 +2,34 @@ defmodule Users.Routes.Auth do
   import Plug.Conn
   use Plug.Router
 
+  alias Users.Services.CheckUserService
+  alias Shared.Jwt
+
   plug(:match)
   plug(:dispatch)
 
   post "/" do
-    %Plug.Conn{ body_params: %{"phoneNumber" => _phoneNumber} } = conn
+    {status, body} =
+      case conn.body_params do
+        %{"phoneNumber" => phoneNumber} -> prepare_response_with_jwt(phoneNumber)
+        _ -> {:bad_request, ''}
 
-    conn
-    |> send_resp(200, "ok")
+      end
+
+    send_resp(conn, status, body)
+  end
+
+  defp prepare_response_with_jwt(phoneNumber) do
+    with {:ok, user} <- CheckUserService.call(phoneNumber),
+         jwt <- Jwt.create(user) do
+      {:ok, jwt}
+    else
+      {:error, msg} -> {:unauthorized, msg}
+    end
   end
 
   match _ do
     conn
-    |> send_resp(404, Jason.encode!(%{success: false, message: "Invalida"}))
+    |> send_resp(:not_found, "")
   end
 end
