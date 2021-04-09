@@ -13,6 +13,7 @@ defmodule Starlink.Sockets do
   end
 
   def websocket_init(state) do
+    Logger.info("New connection")
     {:ok, state}
   end
 
@@ -26,9 +27,8 @@ defmodule Starlink.Sockets do
 
       case json["operation"] do
         "auth" ->
-          %{"phoneNumber" => phoneNumber} = json
+          %{"phoneNumber" => phoneNumber} = json["data"]
 
-          IO.inspect(self())
           with {:ok, user} <- CheckUserService.call(phoneNumber) do
             case InitUserSession.call(user, self()) do
               {:ok, ok} -> {:reply, {:text, "Autenticado"}, state}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { usePhoneAuth } from '../hook/phone';
+import { usePhoneAuth } from '../hooks/phone';
 import Home from './Home';
 import Splash from './Splash';
 

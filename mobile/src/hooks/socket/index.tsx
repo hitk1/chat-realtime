@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { usePhoneAuth } from '../phone'
-import { IWsClientConnection } from '../../../../clientWs/src/interfaces'
-import WsConnection from '../../../../clientWs/src/'
+// import { IWsClientConnection } from '../../../../clientWs/src/interfaces'
+// import WsConnection from '../../../../clientWs/src'
+import {IWsClientConnection} from '../../services/WebSocket/interfaces'
+import WsConnection from '../../services/WebSocket/webSocketClient'
 
 import { ISocketContext } from './interfaces'
 
@@ -13,9 +15,10 @@ const SocketProvider: React.FC = ({ children }) => {
 
 
     useEffect(() => {
-        WsConnection(user.phoneNumber)
+        WsConnection("17988037000")
             .then(socket => {
                 setConn(socket)
+                socket.authenticate("17988037000")
             })
             .catch(error => {
                 console.log(`Erro de conexão com websocket: ${error.message}`)

@@ -31,6 +31,11 @@ defmodule Users.GenStore do
     {:noreply, state}
   end
 
+  def handle_cast({:update_pid, pid}, state) do
+    new_state = Map.put(state, :pid, pid)
+    {:noreply, new_state}
+  end
+
   def handle_call(:get_all, _from, state) do
     {:reply, state, state}
   end

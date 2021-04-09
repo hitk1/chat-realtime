@@ -2,7 +2,7 @@ import React from 'react'
 import { StatusBar } from 'react-native'
 
 import Screens from './screens'
-import AppProvider from './hook'
+import AppProvider from './hooks'
 
 const src: React.FC = () => {
     return (

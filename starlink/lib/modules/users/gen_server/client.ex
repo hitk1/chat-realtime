@@ -17,9 +17,26 @@ defmodule Users.GenClient do
 
   @type state :: State
   def start(state) do
-    %{user_id: user_id} = state
+    %{user_id: user_id, pid: pid} = state
 
-    GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
+    existent_user = GenServer.whereis(Users.Registry.via_tuple(user_id))
+
+    if is_nil(existent_user) do
+      GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
+    else
+      GenServer.cast(UserRegistry.via_tuple(user_id), {:update_pid, pid})
+    end
+
+    # cond do
+    #   nil -> GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
+    #   not -> GenServer.cast(UserRegistry.via_tuple(user_id), {:update_pid, pid})
+    # end
+
+    # with nil <- GenServer.whereis(Users.Registry.via_tuple(user_id)) do
+    #   GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
+    # else
+    #   _ -> Logger.info("Usuário já conectado")
+    # end
   end
 
   def direct_notification(from, to, message) do

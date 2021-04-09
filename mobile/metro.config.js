@@ -5,6 +5,13 @@
  * @format
  */
 
+// const path = require('path')
+
+// const watchFolders = [
+//   path.resolve(__dirname, "..", "clientWs"),
+//   path.resolve(__dirname, "..", "clientWs", "node_modules")
+// ]
+
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -14,4 +21,5 @@ module.exports = {
       },
     }),
   },
+  // watchFolders,
 };
