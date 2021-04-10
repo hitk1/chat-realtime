@@ -1,17 +1,18 @@
 import WebSocket from 'isomorphic-ws'
 import ReconnectingWebSocket from 'reconnecting-websocket'
+
 import { BasicStruct, IDirectMessage, IWsClientBehavior, IWsClientConnection, WsResponse } from './interfaces'
+import { apiIP } from '../../utils/configs'
 
 export const heartbeatInterval = 10 * 1000
 export const wsTimeout = 15 * 1000
 
-//{ onClose, token }: IWsClientBehavior
-export default (phoneNumber: string): Promise<IWsClientConnection> => {
-    // export const ws = ({ onClose }: IWsClientConnection): Promise<any> => {
-    return new Promise((resolve, reject) => {
 
+export default (onMessage: any): Promise<IWsClientConnection> => {
+    return new Promise((resolve, reject) => {
+        
         const socket = new ReconnectingWebSocket(
-            'ws://192.168.0.111:3334/ws',
+            `ws://${apiIP}/ws`,
             [],
             {
                 WebSocket,
@@ -68,12 +69,9 @@ export default (phoneNumber: string): Promise<IWsClientConnection> => {
             if (data === 'pong')
                 return
 
-            // const struct = JSON.parse(data) as WsResponse
-            // connection.onMessage(struct)
-            const message = data
-            console.log(message)
-            // connection.onMessage(message) 
-        }) 
+            const { operation, data: wsData } = JSON.parse(data) as { operation: string, data: any }
+            onMessage(operation, wsData)
+        })
 
         resolve(connection)
 
@@ -84,7 +82,7 @@ export default (phoneNumber: string): Promise<IWsClientConnection> => {
                     clearInterval(id)
                 else
                     socket.send("ping")
-            }, heartbeatInterval) 
+            }, heartbeatInterval)
         })
     })
 }

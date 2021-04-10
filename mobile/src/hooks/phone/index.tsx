@@ -3,12 +3,10 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 import { IPhoneContext, IUser } from './phone.interfaces'
 
-import api from '../../services/api'
-
 const PhoneContext = createContext<IPhoneContext>({} as IPhoneContext)
 
 const PhoneProvider: React.FC = ({ children }) => {
-    const [user, setUser] = React.useState<IUser>({} as IUser)
+    const [user, setUser] = React.useState<IUser | null>()
 
     React.useEffect(() => {
         const loadStorageDate = async () => {
@@ -24,27 +22,40 @@ const PhoneProvider: React.FC = ({ children }) => {
         loadStorageDate()
     }, [])
 
-    const signIn = React.useCallback(async (name: string, phoneNumber: string) => {
+    const signIn = React.useCallback(async (token: string) => {
         try {
-
-            const response = await api.post('/user', { name, phoneNumber })
-
-            if (response.status === 200) {
-                const { _id, name, phoneNumber } = response.data as IUser
-
-                await AsyncStorage.setItem('@Chat-Realtime:user', JSON.stringify({ _id, name, phoneNumber }))
-                setUser({ _id, name, phoneNumber })
-            } else
-                throw new Error(JSON.stringify(response))
-
+            await AsyncStorage.setItem('@Chat-Realtime:token', token)
         } catch (error) {
             console.log('Erro', error.message)
             throw new Error(error.message)
         }
     }, [])
 
+    const persistUser = React.useCallback(async (user: IUser) => {
+        try {
+            await AsyncStorage.setItem('@Chat-Realtime:user', JSON.stringify(user))
+            setUser(user)
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }, [])
+
+    const signOut = React.useCallback(async () => {
+        try {
+            await AsyncStorage.removeItem('@Chat-Realtime:user')
+            setUser(null)
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }, [])
+
     return (
-        <PhoneContext.Provider value={{ user, signIn }}>
+        <PhoneContext.Provider value={{
+            user: user as IUser,
+            signIn,
+            signOut,
+            persistUser
+        }}>
             {children}
         </PhoneContext.Provider>
     )

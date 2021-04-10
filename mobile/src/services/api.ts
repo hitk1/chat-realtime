@@ -1,5 +1,6 @@
 import Axios from 'axios'
+import { apiIP } from '../utils/configs'
 
 export default Axios.create({
-    baseURL: 'http://192.168.0.18:3334'
+    baseURL: `http://${apiIP}:3334`
 })

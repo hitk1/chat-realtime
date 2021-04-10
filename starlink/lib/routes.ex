@@ -6,9 +6,10 @@ defmodule Starlink.Routes do
   alias Users.Routes.User
 
   forward("/session", to: Auth)
+  forward("/users", to: User)
 
   plug Plug.Static, at: "/", from: :starlink
-  plug Shared.Plug.Auth, public_path: "/session"
+  plug Shared.Plug.Auth, public_path: ["/users", "/session"]
   plug Plug.Parsers,
     parsers: [:json],
     pass: ["application/json"],
@@ -16,8 +17,6 @@ defmodule Starlink.Routes do
 
   plug :match
   plug :dispatch
-
-  forward("/users", to: User)
 
   get "/" do
     send_resp(conn, 200, Jason.encode!(%{success: true, message: "Servidor online!"}))

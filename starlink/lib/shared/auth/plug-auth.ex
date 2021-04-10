@@ -24,7 +24,8 @@ defmodule Shared.Plug.Auth do
   end
 
   defp skip_verification?(%Plug.Conn{request_path: request_path} = _conn, public_path) do
-    request_path == public_path
+    # request_path == public_path
+    Enum.member?(public_path, request_path)
   end
 
   defp verify_jwt(conn) do

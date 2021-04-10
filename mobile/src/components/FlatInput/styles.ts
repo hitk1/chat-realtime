@@ -8,5 +8,8 @@ export default StyleSheet.create({
         backgroundColor: '#D3D3D3',
         borderRadius: 10,
         marginBottom: 8,
+    },
+    input: {
+        fontSize: 18
     }
 })

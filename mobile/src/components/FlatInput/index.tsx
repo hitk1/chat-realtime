@@ -62,6 +62,7 @@ const FlatInput: React.ForwardRefRenderFunction<IInputElementRef, IInputProps> =
         ]}>
             <TextInput
                 ref={inputRef}
+                style={styles.input}
                 placeholderTextColor={isFocused ? colors.background : '#A0A0A0'}
                 onChangeText={handleOnTextChange}
                 defaultValue={defaultValue}

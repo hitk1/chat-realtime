@@ -1,15 +1,15 @@
 import { StyleSheet } from "react-native";
 
-import { colors } from '../../utils/configs'
+import { colors } from '../../../utils/configs'
 
 export default StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f3f3f3',
+        backgroundColor: '#f3f3aa',
     },
-    formContainer: {
-        width: '95%',
+    title: {
+        fontSize: 36,
     }
 })

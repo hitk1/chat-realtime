@@ -5,6 +5,7 @@ defmodule Starlink.Sockets do
   alias Users.Services.CheckUserService
   alias Users.Services.InitUserSession
   alias Messages.Services.DirectMessage
+  alias Utils.SocketEncoder
   alias Shared.Jwt
 
 
@@ -32,7 +33,7 @@ defmodule Starlink.Sockets do
           with {:ok, user} <- CheckUserService.call(phoneNumber),
             jwt <- Jwt.create(user) do
               case InitUserSession.call(user, self()) do
-                {:ok, _} -> {:reply, {:text, Jason.encode!(%{data: jwt})}, state}
+                {:ok, _} -> {:reply, {:text, SocketEncoder.call("auth", Jason.encode!(%{token: jwt}))}, state}
                 {:error, _} -> {:reply, {:text, "Erro na autenticao"}, state}
               end
             else

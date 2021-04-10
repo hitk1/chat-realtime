@@ -6,5 +6,7 @@ export interface IUser {
 
 export interface IPhoneContext {
     user: IUser
-    signIn(name: string, phoneNumber: string): Promise<void>
+    signIn(token: string): Promise<void>
+    signOut(): Promise<void>
+    persistUser(user: IUser): Promise<void>
 }

@@ -1,22 +1,63 @@
-import React, { useRef } from 'react';
-import { View, Image } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { View, Image, Alert } from 'react-native';
 import { Form } from '@unform/mobile'
 import { FormHandles } from '@unform/core'
+import { ValidationError } from 'yup'
+
+import getValidationErrors from '../../../services/GetValidationErros'
+import { ITextInputProps } from '../../../utils/interfaces';
 
 import FlatInput from '../../../components/FlatInput'
+import MaskedFlatInput from '../../../components/MaskedFlatInput'
 import FlatButton from '../../../components/FlatButton'
-
-import { ITextInputProps } from '../../../utils/interfaces';
 
 import logo from '../../../assets/Logo.png'
 import blueBorder from '../../../assets/blueBorder.png'
+
+import { IFormData } from './interfaces';
+import { useValidateFunctions } from './services/useValidateForm'
+import createUser from './services/createUser'
+
 import styles from './styles'
+import { usePhoneAuth } from '../../../hooks/phone';
 
 const SignIn: React.FC = () => {
-
+    const { persistUser } = usePhoneAuth()
     const formRef = useRef<FormHandles>(null)
     const nameInputRef = useRef<ITextInputProps>(null)
     const phoneNumberInputRef = useRef<ITextInputProps>(null)
+
+    const handleSubmit = useCallback(async (data: IFormData) => {
+        try {
+            console.log('chegou aqui')
+            formRef.current?.setErrors({})
+            const { schema } = useValidateFunctions()
+
+            await schema.validate(data, { abortEarly: false })
+            const { name, phoneNumber } = data
+
+            const userId = await createUser(
+                name.trim(),
+                phoneNumber.replace(/[()-]/g, '').replace(/\s/g, '')
+            )
+
+            await persistUser({
+                _id: userId,
+                name: name.trim(),
+                phoneNumber: phoneNumber.replace(/[()-]/g, '').replace(/\s/g, '')
+            })
+        } catch (error) {
+            console.log(error.message)
+            if (error instanceof ValidationError)
+                return formRef.current?.setErrors(getValidationErrors(error))
+
+            Alert.alert('Oops!', error.message)
+        }
+    }, [formRef])
+
+    useEffect(() => {
+        nameInputRef.current?.focus()
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -30,7 +71,7 @@ const SignIn: React.FC = () => {
                 <Form
                     ref={formRef}
                     style={styles.form}
-                    onSubmit={() => { }}
+                    onSubmit={handleSubmit}
                 >
                     <View style={{ width: '100%', height: 'auto' }}>
                         <FlatInput
@@ -40,21 +81,26 @@ const SignIn: React.FC = () => {
                             autoCorrect={false}
                             autoCapitalize="words"
                             keyboardType="name-phone-pad"
+                            numberOfLines={1}
+                            maxLength={50}
                             returnKeyType="next"
                             onSubmitEditing={() => phoneNumberInputRef.current?.focus()}
                         />
-
-                        <FlatInput
-                            ref={phoneNumberInputRef}
+                        <MaskedFlatInput
+                            type="cel-phone"
+                            refInput={phoneNumberInputRef}
                             name="phoneNumber"
                             placeholder="Digite seu telefone"
-                            keyboardType="number-pad"
                             returnKeyType="send"
+                            keyboardType="number-pad"
+                            numberOfLines={1}
+                            maxLength={15}
                             onSubmitEditing={() => formRef.current?.submitForm()}
-
                         />
                     </View>
-                    <FlatButton>Join us!</FlatButton>
+                    <FlatButton onPress={() => formRef.current?.submitForm()}>
+                        Join us!
+                    </FlatButton>
                 </Form>
             </View>
             <Image
