@@ -1,9 +1,12 @@
 defmodule Starlink.Routes do
+
   use Plug.Router
   use Plug.ErrorHandler
 
   alias Users.Routes.Auth
   alias Users.Routes.User
+
+  plug CORSPlug, origin: "*"
 
   forward("/session", to: Auth)
   forward("/users", to: User)

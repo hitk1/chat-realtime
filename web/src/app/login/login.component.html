@@ -1,0 +1,62 @@
+<body class="grey lighten-5">
+    <nav>
+        <div class="nav-wrapper toolbar blue darken-1">
+            <img width="40" alt="WebChat Logo" src="assets/Logo.png" />
+            <span>WebChat</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <form [formGroup]="formLogin" (ngSubmit)="onLogin()">
+            <div class="row">
+                <div class="col s4 offset-s4">
+                    <div class="card-panel white">
+
+                        <div class="row center">
+                            <img alt="WebChat Logo" src="assets/Logo.png" />
+                        </div>
+
+                        <div class="row center">
+                            <h3 style="color:#42a5f5">Join Us!</h3>
+                        </div>
+
+                        <div class="row">
+                            <div class="s12">
+                                <div class="input-field">
+                                    <input formControlName="name" id="nameText" type="text" class="validate">
+                                    <label for="nameText">Name</label>
+                                    <!-- <span *ngIf="formLogin.controls.phoneNumber.hasError('required')"
+                                        class="helper-text" data-error="wrong">Name is <strong>required</strong></span> -->
+                                </div>
+                            </div>
+
+                            <div class="s12">
+                                <div class="input-field">
+                                    <input formControlName="phoneNumber" id="phoneNumberText" type="text"
+                                        class="validate">
+                                    <label for="phoneNumberText">Phone Number</label>
+
+                                    <!-- <span *ngIf="validPhoneNumber()" class="helper-text" data-error="wrong">Please enter
+                                        a valid PhoneNumber</span>
+                                    <span *ngIf="formLogin.controls.phoneNumber.hasError('required')"
+                                        class="helper-text" data-error="wrong">PhoneNumber is
+                                        <strong>required</strong></span> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="center">
+                                <button type="submit"
+                                    class="waves-effect waves-light btn-small blue lighten-1">Login</button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>

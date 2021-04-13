@@ -1,0 +1,25 @@
+.toolbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+  }
+
+.toolbar img {
+  margin: 0 16px;
+}
+
+.container{
+  margin-top: 50px;
+}
+
+.input-field input[type=text]:focus + label {
+  color: #42a5f5;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #42a5f5;
+  box-shadow: 0 1px 0 0 #42a5f5;
+}
+

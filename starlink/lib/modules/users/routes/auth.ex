@@ -23,7 +23,7 @@ defmodule Users.Routes.Auth do
     with {:ok, user} <- CheckUserService.call(phoneNumber),
          jwt <- Jwt.create(user) do
 
-      {:ok, Jason.encode!(%{data: jwt})}
+      {:ok, Jason.encode!(jwt)}
     else
       {:error, msg} -> {:unauthorized, msg}
     end
