@@ -1,0 +1,30 @@
+.card .card-content {
+    padding: 0;
+}
+
+.col .row {
+    margin-left: 0;
+}
+
+.div-profile {
+  min-height: 70px;
+}
+
+.color-icons-profile {
+  color: #4b8cc9;
+}
+
+.div-left {
+    position: relative;
+    min-height: 550px;
+    width: 34.75%;
+    border-right: 1px solid black;
+    float: left;
+}
+
+.div-right {
+    position: relative;
+    min-height: 550px;
+    width: 64.25%;
+    float: left;
+}

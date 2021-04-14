@@ -10,12 +10,14 @@ import { MainContainerComponent } from './main-container/main-container.componen
 import { GenericModule } from './generic/generic.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppConfig } from './app.config';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainContainerComponent
+    MainContainerComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
