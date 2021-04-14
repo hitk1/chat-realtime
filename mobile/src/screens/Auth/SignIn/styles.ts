@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { dimensions } from '../../../utils/configs'
+import { dimensions } from '../../../shared/utils/configs'
 
 const { HEIGHT, WIDTH } = dimensions
 export default StyleSheet.create({

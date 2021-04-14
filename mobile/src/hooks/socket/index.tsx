@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
-import WsConnection from '../../services/WebSocket/webSocketClient'
-import { IWsClientConnection } from '../../services/WebSocket/interfaces'
+import WsConnection from '../../shared/services/WebSocket/webSocketClient'
+import { IWsClientConnection } from '../../shared/services/WebSocket/interfaces'
 import { usePhoneAuth } from '../phone'
 
 import { ISocketContext } from './interfaces'

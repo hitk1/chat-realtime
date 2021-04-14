@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 import { TextInput, View, TextInputProps } from 'react-native';
 import { useField } from '@unform/core'
 
-import { colors } from '../../utils/configs';
+import { colors } from '../../shared/utils/configs'
 
 import { IInputElementRef, IInputProps, IInputValueRef } from './interfaces';
 import styles from './styles'

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { dimensions, colors } from '../../../utils/configs'
+import { dimensions, colors } from '../../../shared/utils/configs'
 
 const { HEIGHT } = dimensions
 export default StyleSheet.create({

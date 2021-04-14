@@ -1,4 +1,4 @@
-import api from '../../../../../services/api'
+import api from '../../../../../shared/services/api'
 
 export default async (name: string, phoneNumber: string): Promise<string> => {
     try {

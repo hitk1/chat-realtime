@@ -4,8 +4,8 @@ import { Form } from '@unform/mobile'
 import { FormHandles } from '@unform/core'
 import { ValidationError } from 'yup'
 
-import getValidationErrors from '../../../services/GetValidationErros'
-import { ITextInputProps } from '../../../utils/interfaces';
+import getValidationErrors from '../../../shared/services/GetValidationErros'
+import { ITextInputProps } from '../../../shared/utils/interfaces';
 
 import FlatInput from '../../../components/FlatInput'
 import MaskedFlatInput from '../../../components/MaskedFlatInput'
