@@ -11,6 +11,6 @@ const dimensions = {
     WIDTH: Dimensions.get('screen').width
 }
 
-const apiIP = '192.168.0.111:3334'
+const apiIP = '192.168.0.111'
 
 export { colors, dimensions, apiIP }

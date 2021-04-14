@@ -1,5 +1,6 @@
 apply plugin: "com.android.application"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply plugin: 'kotlin-android'
 
 import com.android.build.OutputFile
 
@@ -186,6 +187,8 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation project(':react-native-vector-icons')
+    implementation project(':react-native-contacts')
+    implementation project(':watermelondb')
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 

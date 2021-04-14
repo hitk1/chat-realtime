@@ -13,7 +13,11 @@ const Routes: React.FC = () => {
         setTimeout(() => setIsLoading(false), 1500)
     }, [user])
 
-    return isLoading ? <Splash /> : (user?._id !== undefined ? <AppRoutes /> : <AuthRoutes />)
+    return isLoading
+        ? <Splash
+            text="Carregando..."
+        />
+        : (user?._id !== undefined ? <AppRoutes /> : <AuthRoutes />)
 }
 
 export default Routes;

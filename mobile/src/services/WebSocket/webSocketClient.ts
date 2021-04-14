@@ -12,7 +12,7 @@ export default (onMessage: any): Promise<IWsClientConnection> => {
     return new Promise((resolve, reject) => {
         
         const socket = new ReconnectingWebSocket(
-            `ws://${apiIP}/ws`,
+            `ws://${apiIP}:3334/ws`,
             [],
             {
                 WebSocket,
