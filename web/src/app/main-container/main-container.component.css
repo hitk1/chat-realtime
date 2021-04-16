@@ -1,30 +1,28 @@
-.card .card-content {
-    padding: 0;
+.main-box{
+  height: 580px;
+  position: relative;
 }
 
-.col .row {
-    margin-left: 0;
+.box-header {
+  height: 70px;
 }
 
-.div-profile {
-  min-height: 70px;
+.box-contatos {
+  height: 100%;
 }
 
-.color-icons-profile {
-  color: #4b8cc9;
+.li-height {
+  height: 100%;
 }
 
-.div-left {
-    position: relative;
-    min-height: 550px;
-    width: 34.75%;
-    border-right: 1px solid black;
-    float: left;
+.span-contato {
+  position: absolute; 
+  padding-left: 15px; 
+  text-align: center; 
+  text-transform: capitalize; 
+  color: black;
 }
 
-.div-right {
-    position: relative;
-    min-height: 550px;
-    width: 64.25%;
-    float: left;
+.tabs{
+  overflow-x: hidden;
 }
