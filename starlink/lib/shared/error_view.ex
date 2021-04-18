@@ -15,4 +15,10 @@ defmodule Starlink.ErrorView do
     end)
   end
 
+  def render("message", message) do
+    Jason.encode!(%{
+      message: message
+    })
+  end
+
 end

@@ -13,5 +13,5 @@ config :starlink, Shared.Repo,
 
 config :jwt_starlink,
   jwt_issuer: "Websocket Starlink",
-  jwt_expiration_time_minutes: 30,
+  jwt_expiration_time_minutes: 12 * 30,
   jwt_secret_hs256_signature: "5553e9a88496967a0af92b9ea8a36bf89daa53d3ca7cf76b370d1a914a3da6db"

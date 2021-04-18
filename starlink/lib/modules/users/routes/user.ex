@@ -2,10 +2,13 @@ defmodule Users.Routes.User do
   import Plug.Conn
   use Plug.Router
 
+  alias Users.Routes.Friends
   alias Users.Controllers.User, as: UserController
   alias Users.Views.User, as: UserView
   alias Users.Repo.User
   alias Starlink.ErrorView
+
+  forward("/getFriends", to: Friends)
 
   plug(:match)
   plug(:dispatch)
@@ -31,5 +34,4 @@ defmodule Users.Routes.User do
     conn
     |> send_resp(400, ErrorView.render("400.json", changeset))
   end
-
 end
