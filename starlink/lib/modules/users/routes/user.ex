@@ -8,7 +8,7 @@ defmodule Users.Routes.User do
   alias Users.Repo.User
   alias Starlink.ErrorView
 
-  forward("/getFriends", to: Friends)
+  forward("/findFriends", to: Friends)
 
   plug(:match)
   plug(:dispatch)

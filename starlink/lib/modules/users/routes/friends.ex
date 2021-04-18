@@ -11,7 +11,7 @@ defmodule Users.Routes.Friends do
 
   #Get List of Friends by phones
   post "/" do
-    FriendsController.get_friends(conn)
+    FriendsController.find_friends(conn)
     |> handle_cast(conn)
   end
 

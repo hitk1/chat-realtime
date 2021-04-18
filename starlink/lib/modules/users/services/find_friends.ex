@@ -1,4 +1,4 @@
-defmodule Users.Services.GetFriendsService do
+defmodule Users.Services.FindFriendsService do
   import Ecto.Query, only: [from: 2]
 
   alias Shared.Repo

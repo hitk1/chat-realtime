@@ -1,9 +1,9 @@
 defmodule Users.Controllers.Friends do
-  alias Users.Services.GetFriendsService
+  alias Users.Services.FindFriendsService
 
-  def get_friends(conn) do
+  def find_friends(conn) do
     %Plug.Conn{body_params: %{"phones" => phonesList}} = conn
 
-    GetFriendsService.call(phonesList)
+    FindFriendsService.call(phonesList)
   end
 end
