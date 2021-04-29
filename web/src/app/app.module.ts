@@ -11,13 +11,17 @@ import { GenericModule } from './generic/generic.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppConfig } from './app.config';
 import { HeaderComponent } from './header/header.component';
+import { ContatoCardComponent } from './main-container/contato-card/contato-card.component';
+import { ContatoChatBoxComponent } from './main-container/contato-chat-box/contato-chat-box.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainContainerComponent,
-    HeaderComponent
+    HeaderComponent,
+    ContatoCardComponent,
+    ContatoChatBoxComponent
   ],
   imports: [
     BrowserModule,

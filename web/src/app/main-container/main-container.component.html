@@ -34,47 +34,13 @@
                         </div>
                     </li>
                     <li class="tab col s8 li-height">
-                        <div class="row valign-wrapper">
-
-                            <div class="col s4 left-align" style="padding-left: 25px;">
-                                <img width="40"
-                                    src="https://i.pinimg.com/originals/f5/d9/8b/f5d98b3e305d45533bd32d558c70c5d9.jpg"
-                                    alt="" class="circle"> <!-- notice the "circle" class -->
-
-                                <span class="span-contato">Snoopy</span>
-
-                            </div>
-
-                            <div class="col s8" style="padding-top: 18px; padding-right: 20px;">
-
-                                <div class="row right">
-
-                                    <div class="col s12">
-                                        <i class="material-icons">more_vert</i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <app-contato-chat-box [options]="contatoSelecionado"></app-contato-chat-box>
                     </li>
                 </ul>
-                <ul class="tabs white grey-text " style="height: 90px;">
-                    <li class="tab col s4" style="height: 100%">
-                        <div class="row valign-wrapper">
-                            <div class="col s3">
-                                <img width="85" style="padding-left: 25px;" src="https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper.png"
-                                    alt="" class="circle responsive-img">
-                            </div>
-                            <div class="col s8 left-align">
-                                <span class="black-text"><b>Avatar</b><br>
-                                    <span class="grey-text">Alguma mensagem enviada </span>
-                                </span>
-                            </div>
-                            <div class="col s1">
-                                <span class="badge circle green white-text"
-                                    style="width: 10px; text-align: center;">1</span>
-                            </div>
-                        </div>
-
+                <ul class="tabs white grey-text" style="position: absolute; height: 510px">
+                    <li class="tab col s4" style="position: absolute; height: 100%; border-right: .1px solid #eee;">
+                        <app-contato-card *ngFor="let contato of listContatos" [options]="contato"
+                            (onSelect)="onSelectContato($event)"></app-contato-card>
                     </li>
                     <li class="tab col s8">
 
