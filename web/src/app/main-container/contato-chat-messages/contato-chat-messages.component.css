@@ -1,0 +1,77 @@
+.row { 
+    margin-bottom: 0;
+}
+
+.message {
+    position: absolute;
+    width: 100%;
+    height: 55px;
+    bottom: 0;
+}
+
+.badge {
+    margin-top: 10px;
+    position: relative;
+}
+
+.div-message {
+    line-height: 1.5;
+    padding: 0 6px; 
+    text-align: start;
+    margin-top: 10px; 
+    margin-left: 10px; 
+    border-radius: 5px; 
+    max-width: 55%; 
+    height: auto; 
+    position: relative; 
+    white-space: normal;
+}
+
+.chat-message {
+    background-repeat: repeat;
+    background-color: rgb(215, 225, 243);
+    height: 100%;
+}
+
+.chat-message::before { 
+   content : "";
+   display: block;
+   position: absolute;
+   top: 0;
+   left: 0;
+   background-image: url("/assets/backmessage.jpg");
+   width: 100%;
+   height: 100%;
+   opacity : 0.4;
+}
+
+.input-field {
+    background-color: white;
+    border-radius: 50px;
+    height: 39px;
+    padding-left: 10px;
+    padding-top: 8px;
+    margin-top: 8px;
+}
+
+.input-field textarea.materialize-textarea:focus {
+    border-bottom: none;
+    box-shadow: none;
+  }
+  /* valid color */
+  .input-field textarea.materialize-textarea.valid {
+    border-bottom: none;
+    box-shadow: none;
+  }
+  /* invalid color */
+  .input-field textarea.materialize-textarea.invalid {
+    border-bottom: none;
+    box-shadow: none;
+  }
+
+.input-field textarea.materialize-textarea {
+   font-size: 12px;
+   border-bottom: none;
+   box-shadow: none;
+   
+}

@@ -13,6 +13,7 @@ import { AppConfig } from './app.config';
 import { HeaderComponent } from './header/header.component';
 import { ContatoCardComponent } from './main-container/contato-card/contato-card.component';
 import { ContatoChatBoxComponent } from './main-container/contato-chat-box/contato-chat-box.component';
+import { ContatoChatMessagesComponent } from './main-container/contato-chat-messages/contato-chat-messages.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ContatoChatBoxComponent } from './main-container/contato-chat-box/conta
     MainContainerComponent,
     HeaderComponent,
     ContatoCardComponent,
-    ContatoChatBoxComponent
+    ContatoChatBoxComponent,
+    ContatoChatMessagesComponent
   ],
   imports: [
     BrowserModule,
