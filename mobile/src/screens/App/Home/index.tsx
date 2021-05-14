@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { PermissionsAndroid } from 'react-native';
+import { Alert, PermissionsAndroid } from 'react-native';
 import ContactsFunction from 'react-native-contacts';
 import { useNavigation } from '@react-navigation/native';
 
 import styles from './styles'
+import UpdateContactsList from '../../../shared/services/UpdateContactsList';
 
 const Home: React.FC = () => {
 	const { addListener, removeListener, navigate } = useNavigation()
@@ -22,21 +23,21 @@ const Home: React.FC = () => {
 					navigate('NoContacts')
 				else {
 					const contacts = await ContactsFunction.getAll()
-					console.log(contacts.map(item => item.phoneNumbers))
+					const newContacts = await new UpdateContactsList().execute(contacts)
+
+					if (newContacts > 0)
+						Alert.alert('Novos contatos', `${newContacts} novos contatos`)
 				}
 			})
 	}, [])
 
 	useEffect(() => {
 		addListener('focus', () => handlePermission())
-		return () => {
-			removeListener('focus', () => { })
-		}
+		return () => removeListener('focus', () => { })
 	}, [])
 
 	return (
 		<>
-
 		</>
 	)
 }

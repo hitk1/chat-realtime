@@ -1,28 +1,26 @@
 import { Database } from '@nozbe/watermelondb'
-// import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite'
 
-// import AppSchema from './schema'
+import AppSchema from './schema'
 
-// import BrokerModel from './models/Broker'
-// import UserModel from './models/User'
-// import BrokerageNotePending from './models/BrokerageNotes/Pending'
+import ContactsModel from './models/Contacts'
+import MessagesModel from './models/Messages'
 
-// export let database: Database
+export let database: Database
 
-// export const watermelonDBinit = () => {
+export const watermelonDBinit = () => {
 
-//     const adapter = new SQLiteAdapter({
-//         schema: AppSchema,
-//         dbName: 'meuir'
-//     })
+    const adapter = new SQLiteAdapter({
+        schema: AppSchema,
+        dbName: 'chat'
+    })
 
-//     database = new Database({
-//         adapter,
-//         modelClasses: [
-//             UserModel,
-//             BrokerModel,
-//             BrokerageNotePending,
-//         ],
-//         actionsEnabled: true,
-//     })
-// }
+    database = new Database({
+        adapter,
+        modelClasses: [
+            ContactsModel,
+            MessagesModel,
+        ],
+        actionsEnabled: true,
+    })
+}

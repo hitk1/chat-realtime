@@ -29,7 +29,6 @@ const SignIn: React.FC = () => {
 
     const handleSubmit = useCallback(async (data: IFormData) => {
         try {
-            console.log('chegou aqui')
             formRef.current?.setErrors({})
             const { schema } = useValidateFunctions()
 
@@ -47,7 +46,6 @@ const SignIn: React.FC = () => {
                 phoneNumber: phoneNumber.replace(/[()-]/g, '').replace(/\s/g, '')
             })
         } catch (error) {
-            console.log(error.message)
             if (error instanceof ValidationError)
                 return formRef.current?.setErrors(getValidationErrors(error))
 

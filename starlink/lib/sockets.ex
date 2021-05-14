@@ -8,7 +8,6 @@ defmodule Starlink.Sockets do
   alias Utils.SocketEncoder
   alias Shared.Jwt
 
-
   def init(req, _state) do
     state = %{}
     {:cowboy_websocket, req, state}
@@ -26,32 +25,37 @@ defmodule Starlink.Sockets do
 
   def websocket_handle({:text, frame}, state) do
     with {:ok, json} <- Poison.decode(frame) do
-
       case json["operation"] do
         "auth" ->
           %{"phoneNumber" => phoneNumber} = json["data"]
+
           with {:ok, user} <- CheckUserService.call(phoneNumber),
-            jwt <- Jwt.create(user) do
-              case InitUserSession.call(user, self()) do
-                {:ok, _} -> {:reply, {:text, SocketEncoder.call("auth", Jason.encode!(%{token: jwt}))}, state}
-                {:error, _} -> {:reply, {:text, "Erro na autenticao"}, state}
-              end
-            else
-              reason ->
-                IO.inspect(reason)
-                {:reply, {:text, "Deu ruim"}, state}
+               jwt <- Jwt.create(user) do
+            case InitUserSession.call(user, self()) do
+              {:ok, _} ->
+                {:reply, {:text, SocketEncoder.call("auth", Jason.encode!(%{token: jwt}))}, state}
+
+              {:error, _} ->
+                {:reply, {:text, "Erro na autenticao"}, state}
             end
-        "direct"->
+          else
+            reason ->
+              IO.inspect(reason)
+              {:reply, {:text, "Deu ruim"}, state}
+          end
+
+        "direct" ->
           %{"data" => %{"to" => to_user, "message" => message}, "auth" => from} = json
 
           with {:ok, message_id} <- DirectMessage.call(from, to_user, message) do
-            # %{id: message_id} = message
             {:reply, {:text, message_id}, state}
           else
             reason ->
               {:reply, {:text, reason}, state}
           end
-        _ -> {:reply, {:text, "invalid!"}, state}
+
+        _ ->
+          {:reply, {:text, "invalid!"}, state}
       end
     end
   end
@@ -65,7 +69,7 @@ defmodule Starlink.Sockets do
     {:reply, {:text, message}, state}
   end
 
-  #Necessário para os casos de assyncronismo
+  # Necessário para os casos de assyncronismo
   def websocket_info({:EXIT, _, _}, state) do
     {:ok, state}
   end
@@ -73,5 +77,4 @@ defmodule Starlink.Sockets do
   def websocket_info(info, state) do
     {:reply, {:text, "logando: #{info}"}, state}
   end
-
 end

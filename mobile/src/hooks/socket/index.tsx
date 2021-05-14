@@ -4,6 +4,7 @@ import { IWsClientConnection } from '../../shared/services/WebSocket/interfaces'
 import { usePhoneAuth } from '../phone'
 
 import { ISocketContext } from './interfaces'
+import api from '../../shared/services/api'
 
 const SocketContext = createContext({} as ISocketContext)
 
@@ -15,6 +16,8 @@ const SocketProvider: React.FC = ({ children }) => {
         switch (operation) {
             case 'auth':
                 const { token } = JSON.parse(data) as { token: string }
+
+                api.defaults.headers.authorization = `Bearer ${token}`
                 signIn(token)
                 break
             default: break
@@ -32,6 +35,20 @@ const SocketProvider: React.FC = ({ children }) => {
                     console.log(`Erro de conexão com websocket: ${error.message}`)
                 })
     }, [user])
+
+    api.interceptors.response.use(
+        async response => { return response },
+        async error => {
+            if (error.response.status == 401) {
+                try {
+                    return conn.authenticate(user.phoneNumber)
+                } catch (error) {
+                    throw new Error(error)
+                }
+            } else
+                return error.response
+        }
+    )
 
     return (
         <SocketContext.Provider value={{ socket: conn }} >
