@@ -7,9 +7,11 @@ export default StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#f3f3aa',
+        backgroundColor: '#EEE',
     },
-    title: {
-        fontSize: 36,
+    listItemSeparator: {
+        height: 1,
+        width: '100%',
+        backgroundColor: '#eee'
     }
 })

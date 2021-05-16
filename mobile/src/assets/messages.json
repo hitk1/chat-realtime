@@ -1,0 +1,28 @@
+{
+    "data": [
+        {
+            "id": "dfghdshdghdghsdghsdghsdghsd",
+            "from": "adfasd",
+            "to": "jpljmlpjkohjmko",
+            "message": "Ola este é um teste de mensagem"
+        },
+        {
+            "id": "sdfgsdfgsdv",
+            "from": "adfasd",
+            "to": "jpljmlpjkohjmko",
+            "message": "Olá testando mensagem 2"
+        },
+        {
+            "id": "dfghdshdghdghsdghsdghsdghsd",
+            "from": "adfasd",
+            "to": "jpljmlpjkohjmko",
+            "message": "Testando de mensageria"
+        },
+        {
+            "id": "sdfgsdfgsdd",
+            "from": "adfasd",
+            "to": "jpljmlpjkohjmko",
+            "message": "Estamos testando mensageria entregue ou não"
+        }
+    ]
+}

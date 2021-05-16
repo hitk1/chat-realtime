@@ -11,6 +11,13 @@ const dimensions = {
     WIDTH: Dimensions.get('screen').width
 }
 
+const defaultHitSlop = {
+    top: 25,
+    right: 25,
+    bottom: 25,
+    left: 25
+}
+
 const apiIP = '192.168.0.111'
 
-export { colors, dimensions, apiIP }
+export { colors, dimensions, apiIP, defaultHitSlop }
