@@ -5,6 +5,7 @@ defmodule Shared.Repo.Migrations.CreateUser do
     create table :users do
       add :name, :string
       add :phoneNumber, :string
+      add :avatar_url, :string
 
       timestamps()
     end

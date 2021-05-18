@@ -9,11 +9,10 @@ defmodule Messages.Repo.Message do
   @required_params [:from, :to, :message]
 
   schema "messages" do
-    field :message, :string
-    field :delivered, :boolean, default: false
-    field :readed, :boolean, default: false
-    belongs_to :from_user, UserModel, foreign_key: :from
-    belongs_to :to_user, UserModel, foreign_key: :to
+    field(:message, :string)
+    field(:status, :integer, default: 1)
+    belongs_to(:from_user, UserModel, foreign_key: :from)
+    belongs_to(:to_user, UserModel, foreign_key: :to)
 
     timestamps()
   end

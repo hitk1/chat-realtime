@@ -6,8 +6,7 @@ defmodule Shared.Repo.Migrations.CreateMessages do
       add :from, references(:users, type: :binary_id)
       add :to, references(:users, type: :binary_id)
       add :message, :string
-      add :delivered, :boolean
-      add :readed, :boolean
+      add :status, :integer
 
       timestamps()
     end
