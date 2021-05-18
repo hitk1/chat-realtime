@@ -1,5 +1,6 @@
 {
     "api": {
-        "urlService": "http://localhost:3334/"
+        "urlService": "http://localhost:3334/",
+        "apiIP": "192.168.0.108:3334"
     }
 }

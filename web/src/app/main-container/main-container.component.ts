@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WebSocketService } from '../generic/websocket/websocket.service';
 import { IContatoCardOptions } from './contato-card/contato-card.interface';
 import { IContatoChatBox } from './contato-chat-box/contato-chat-box.interface';
 
@@ -9,28 +10,32 @@ import { IContatoChatBox } from './contato-chat-box/contato-chat-box.interface';
 })
 export class MainContainerComponent implements OnInit {
 
+  constructor(public socketService: WebSocketService) { }
+  
   public listContatos: IContatoCardOptions[] = [];
   public contatoSelecionado: IContatoChatBox;
-  constructor() { }
 
-  ngOnInit(): void {
+  async ngOnInit()  {
+    await this.socketService.connectSocket();
+
     this.listContatos = [
       {
         imgSrc: "https://image.flaticon.com/icons/png/512/147/147144.png",
-        nome: "Tonhão",
+        nome: "Luis Paulo",
         ultimaMsg: "Booooooora tomar uma?",
         msgNaoLidas: 1,
         horMsgNaoLida: "22:10"
       },
 
       {
-        imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT8K-kfbxSsaGJugBkF_sfdl1Ms1UUKcRnvRQ&usqp=CAU",
-        nome: "Robert",
-        ultimaMsg: "blz, man!",
+        imgSrc: "https://www.pngix.com/pngfile/middle/5-53698_user-profile-avatar-scalable-vector-graphics-icon-woman.png",
+        nome: "Ariane",
+        ultimaMsg: "Booom dia!",
         msgNaoLidas: 0,
         horMsgNaoLida: "23:53"
       }
     ];
+
 
     this.onSelectContato(this.listContatos[0]);
   }
