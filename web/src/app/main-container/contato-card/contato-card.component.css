@@ -1,0 +1,35 @@
+.badge {
+  min-width: 0;
+}
+
+.row-contato {
+  margin-top: 10px; 
+  margin-bottom: 0;
+  padding-bottom: 5px; 
+  margin-right: auto;
+  border-bottom: .1px solid #eee;
+  cursor: pointer;
+}
+
+.span-ult-msg {
+  line-height: 2.5; 
+  font-size: 11px;
+}
+
+.span-ult-msg-hora {
+  float: right;  
+  padding-bottom: 7px;
+  font-size: 11px;
+}
+
+.span-msg-nao-lida {
+  font-weight: bold;
+}
+
+.span-notificacao {
+  font-size: x-small;
+  width: 22px; 
+  text-align: center;
+}
+
+

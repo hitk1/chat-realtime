@@ -1,0 +1,13 @@
+.container{
+  margin-top: 50px;
+}
+
+.input-field input[type=text]:focus + label {
+  color: #4b8cc9;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #4b8cc9;
+  box-shadow: 0 1px 0 0 #4b8cc9;
+}
+

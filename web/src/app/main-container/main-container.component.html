@@ -1,0 +1,57 @@
+<app-header></app-header>
+
+<div class="container">
+
+    <div class="col z-depth-2 white main-box">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs grey lighten-2 grey-text box-header">
+                    <li class="tab col s4 li-height" style="border-right: .1px solid #bdbdbd;">
+                        <div class="row">
+                            <div class="col s4 left-align" style="padding-left: 25px;">
+                                <div class="section">
+                                    <img width="40"
+                                        src="https://image.freepik.com/vetores-gratis/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg"
+                                        alt="" class="circle"> <!-- notice the "circle" class -->
+                                </div>
+                            </div>
+
+                            <div class="col s8" style="padding-top: 18px; padding-right: 20px;">
+                                <div class="row right">
+                                    <div class="col s4">
+                                        <i class="material-icons">refresh</i>
+                                    </div>
+                                    <div class="col s4">
+
+                                        <i class="material-icons">message</i>
+                                    </div>
+                                    <div class="col s4">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="tab col s8 li-height">
+                        <app-contato-chat-box [options]="contatoSelecionado"></app-contato-chat-box>
+                    </li>
+                </ul>
+                <ul class="tabs white grey-text" style="height: 510px">
+                    <li class="tab col s4" style="height: 100%; border-right: .1px solid #eee;">
+                        <app-contato-card *ngFor="let contato of listContatos" [options]="contato"
+                            (onSelect)="onSelectContato($event)"></app-contato-card>
+                    </li>
+                    <li class="tab col s8" style="height: 100%; position: relative;">
+                        <app-contato-chat-messages></app-contato-chat-messages>
+                    </li>
+                </ul>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+</div>

@@ -1,0 +1,28 @@
+.main-box{
+  height: 580px;
+  position: relative;
+}
+
+.box-header {
+  height: 70px;
+}
+
+.box-contatos {
+  height: 100%;
+}
+
+.li-height {
+  height: 100%;
+}
+
+.tabs{
+  overflow-x: hidden;
+}
+
+.tabs .tab {
+  text-transform: none;
+  line-height: 10px;
+}
+
+
+
