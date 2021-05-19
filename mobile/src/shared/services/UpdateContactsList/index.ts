@@ -8,6 +8,7 @@ import { database } from '../../infra/database'
 import { SNContacts } from '../../infra/database/schema/Contacts'
 import CreateContacts from '../CreateContacts'
 import ContactsModel from '../../infra/database/models/Contacts'
+import GenerateFriendList from '../GenerateFriendLists'
 
 export default class UpdateContactsList implements IService {
 
@@ -27,6 +28,7 @@ export default class UpdateContactsList implements IService {
         try {
             let result = 0
             const createContactService = new CreateContacts()
+            const generateFriendList = new GenerateFriendList()
             const contactsCollection = database.get<ContactsModel>(SNContacts)
             const rawQuery = `SELECT * FROM ${SNContacts} WHERE phoneNumber IN (${contacts.reduce((prev: string[], curr) => [...prev, `'${curr.phones[0]}'`], [])})`
 
@@ -49,11 +51,14 @@ export default class UpdateContactsList implements IService {
                     }
 
                     await createContactService.execute(newContacts)
+                    await generateFriendList.execute(newContacts)
                     result = newContacts.length
                 }
 
-            } else
+            } else {
                 await createContactService.execute(contacts)
+                await generateFriendList.execute(contacts)
+            }
 
             return result
         } catch (error) {

@@ -40,6 +40,6 @@ defmodule Contacts.Routes.Contacts do
 
   defp handle_cast({:created, message}, conn) do
     conn
-    |> send_resp(202, ContactsView.render("friendship_created", message))
+    |> send_resp(200, ContactsView.render("friendship_created", message))
   end
 end
