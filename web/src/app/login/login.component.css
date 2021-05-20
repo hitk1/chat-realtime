@@ -2,6 +2,15 @@
   margin-top: 50px;
 }
 
+.box-login {
+  margin-top: 0px;  
+  position: relative;
+}
+
+.btn-small {
+  text-transform: capitalize;
+}
+
 .input-field input[type=text]:focus + label {
   color: #4b8cc9;
 }

@@ -11,14 +11,12 @@ export class ChatGuard implements CanActivate {
   constructor(private route: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    // var sessionActived = localStorage.getItem(Constants.STORAGE_USER_SESSION) != null;
+    var sessionActived = localStorage.getItem(Constants.STORAGE_USER_SESSION) != null;
 
-    // if (!sessionActived)
-    //   this.route.navigate(["/login"]);
+    if (!sessionActived)
+       this.route.navigate(["/login"]);
 
-    // return sessionActived;
-
-    return true;
+    return sessionActived;
   }
 
 }
