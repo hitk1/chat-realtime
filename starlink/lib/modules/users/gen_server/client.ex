@@ -6,11 +6,11 @@ defmodule Users.GenClient do
 
   defmodule State do
     @type t :: %__MODULE__{
-        user_id: String.t(),
-        name: String.t(),
-        phoneNumber: String.t(),
-        pid: pid()
-    }
+            user_id: String.t(),
+            name: String.t(),
+            phoneNumber: String.t(),
+            pid: pid()
+          }
 
     defstruct user_id: nil, name: "", phoneNumber: "", pid: nil
   end
@@ -40,7 +40,16 @@ defmodule Users.GenClient do
   end
 
   def direct_notification(from, to, message) do
-    GenServer.cast(UserRegistry.via_tuple(to), {:notify_direct_message, %{from: from, message: message}})
+    GenServer.cast(
+      UserRegistry.via_tuple(to),
+      {:notify_direct_message, %{from: from, message: message}}
+    )
   end
 
+  def get_unreceived_messages(user_id) do
+    GenServer.cast(
+      UserRegistry.via_tuple(user_id),
+      {:get_unreceived_messages, user_id}
+    )
+  end
 end

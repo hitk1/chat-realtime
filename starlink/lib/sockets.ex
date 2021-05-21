@@ -4,7 +4,9 @@ defmodule Starlink.Sockets do
 
   alias Users.Services.CheckUserService
   alias Users.Services.InitUserSession
+  alias Users.Services.InvokeGetUnreceivedMessages
   alias Messages.Services.DirectMessage
+  alias Messages.Services.UpdateStatusMessage
   alias Utils.SocketEncoder
   alias Shared.Jwt
 
@@ -33,6 +35,9 @@ defmodule Starlink.Sockets do
                jwt <- Jwt.create(user) do
             case InitUserSession.call(user, self()) do
               {:ok, _} ->
+                %{id: user_id} = user
+                InvokeGetUnreceivedMessages.call(user_id)
+
                 {:reply, {:text, SocketEncoder.call("auth", Jason.encode!(%{token: jwt}))}, state}
 
               {:error, _} ->
@@ -54,6 +59,24 @@ defmodule Starlink.Sockets do
               {:reply, {:text, reason}, state}
           end
 
+        "direct_received" ->
+          %{"data" => %{"messageId" => message_id}} = json
+
+          with {:ok, message} <- UpdateStatusMessage.call(message_id, 1) do
+            {:reply, {:text, message}, state}
+          else
+            _ -> {:reply, {:text, "Error on update status message"}, state}
+          end
+
+        "direct_readed" ->
+          %{"data" => %{"messageId" => message_id}} = json
+
+          with {:ok, message} <- UpdateStatusMessage.call(message_id, 2) do
+            {:reply, {:text, message}, state}
+          else
+            _ -> {:reply, {:text, "Error on update status message"}, state}
+          end
+
         _ ->
           {:reply, {:text, "invalid!"}, state}
       end
@@ -67,6 +90,10 @@ defmodule Starlink.Sockets do
 
   def websocket_info({:notify_direct_message, message}, state) do
     {:reply, {:text, message}, state}
+  end
+
+  def websocket_info({:notify_unreceived_messages, unreceived_messages}, state) do
+    {:reply, {:text, unreceived_messages}, state}
   end
 
   # Necessário para os casos de assyncronismo
