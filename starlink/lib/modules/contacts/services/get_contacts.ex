@@ -24,5 +24,6 @@ defmodule Contacts.Services.GetContacts do
       end)
 
       {:friendship, result}
+    end
   end
 end
