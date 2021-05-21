@@ -53,6 +53,25 @@ export class CommunicationService {
         });
     }
 
+    public getPromise<TModel>(url: string): Promise<TModel> {
+        return new Promise((resolve) => {
+            this.http.get(url, { headers: this.getHeader() }).subscribe(
+                (response) => {
+                    resolve(<TModel>response);
+                },
+                (error) => {
+                    let resultError = <ICommunication<TModel>>{
+                        success: false,
+                        statusCode: error.status,
+                        data: error.error
+                    };
+
+                    this.errorValidate(resultError);
+                    resolve(error.error);
+                });
+        });
+    }
+
     getHeader(): HttpHeaders { return new HttpHeaders().set("Authorization", "Bearer " + this.getToken()).append('Content-Type', 'application/json'); }
 
     public getToken() {
@@ -75,9 +94,9 @@ export class CommunicationService {
 
     private errorValidate(result: any) {
         if (!result.success) {
-            if (!isNullOrUndefined(result.modelState)) {
-                if (result.modelState.message == "USR_LOGIN") { this.router.navigate(['/entrar']); }
-                //adicionar demais erros aqui
+            if (result.statusCode == 401) {
+                localStorage.clear();
+                this.router.navigate(['/login']);
             }
         }
     }

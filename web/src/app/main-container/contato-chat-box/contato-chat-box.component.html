@@ -1,9 +1,9 @@
-<div class="row valign-wrapper">
+<div *ngIf="options" class="row valign-wrapper">
 
     <div class="col s4 left-align" style="padding-left: 25px;">
         <img width="40" [attr.src]="options.imgSrc" alt="" class="circle">
 
-        <span class="span-contato">{{ options.nome }}</span>
+        <span class="span-contato">{{ options.alias }}</span>
 
     </div>
 

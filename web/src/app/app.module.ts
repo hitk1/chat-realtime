@@ -14,6 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { ContatoCardComponent } from './main-container/contato-card/contato-card.component';
 import { ContatoChatBoxComponent } from './main-container/contato-chat-box/contato-chat-box.component';
 import { ContatoChatMessagesComponent } from './main-container/contato-chat-messages/contato-chat-messages.component';
+import { MainContainerResolver } from './main-container/main-container.resolver';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ContatoChatMessagesComponent } from './main-container/contato-chat-mess
       provide: APP_INITIALIZER,
       useFactory: InitApp,
       deps: [AppConfig], multi: true
-    }    
+    },
+    MainContainerResolver    
   ],
   bootstrap: [AppComponent]
 })

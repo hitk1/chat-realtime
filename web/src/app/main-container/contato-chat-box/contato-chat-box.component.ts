@@ -14,12 +14,11 @@ export class ContatoChatBoxComponent implements OnInit {
     if (!value) return;
 
     this.options = value;
-    console.log(value)
   }
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
 }
