@@ -1,10 +1,11 @@
 import Config
 
 config :starlink, ecto_repos: [Shared.Repo]
+
 config :starlink, Shared.Repo,
   database: "chat",
   username: "postgres",
-  password: "postgres",
+  password: "rpi1234",
   hostname: "localhost"
 
 config :starlink, Shared.Repo,

@@ -23,7 +23,6 @@ defmodule Contacts.Services.GetContacts do
         %{alias: alias, phone_number: phone_number}
       end)
 
-      {:friendship, result}
-    end
+    {:friendship, result}
   end
 end
