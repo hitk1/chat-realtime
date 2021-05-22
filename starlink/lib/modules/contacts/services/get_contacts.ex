@@ -23,10 +23,7 @@ defmodule Contacts.Services.GetContacts do
         %{alias: alias, phone_number: phone_number}
       end)
 
-    if length(result) > 0 do
       {:friendship, result}
-    else
-      {:has_no_friendship, "Seus contatos não foram localizados"}
     end
   end
 end

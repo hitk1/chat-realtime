@@ -30,7 +30,8 @@ defmodule Starlink.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:elixir_uuid, "~> 1.2"},
       {:poison, "~> 4.0"},
-      {:gen_registry, "~> 1.0"}
+      {:gen_registry, "~> 1.0"},
+      {:cors_plug, "~> 2.0"}
     ]
   end
 end

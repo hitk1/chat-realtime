@@ -4,7 +4,7 @@ config :starlink, ecto_repos: [Shared.Repo]
 config :starlink, Shared.Repo,
   database: "chat",
   username: "postgres",
-  password: "rpi1234",
+  password: "postgres",
   hostname: "localhost"
 
 config :starlink, Shared.Repo,

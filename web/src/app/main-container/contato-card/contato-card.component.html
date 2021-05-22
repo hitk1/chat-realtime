@@ -1,0 +1,16 @@
+<div class="row row-contato" (click)="onSelectContato()">
+    <div class="col s2" style="margin-left: 15px;">
+        <img width="35" [attr.src]="options.imgSrc" alt="" class="circle">
+    </div>
+    <div class="col s7 left-align" style=" margin-top: 5px;">
+        <span class="black-text" style="font-size: small;"><b>{{ options.alias }}</b><br>
+        </span>
+        <span class="span-ult-msg" [ngClass]="{'span-msg-nao-lida' : options.msgNaoLidas > 0 }">{{ options.ultimaMsg
+            }}</span>
+    </div>
+    <div class="col s1 offset-s1">
+        <span class="span-ult-msg-hora">{{ options.horMsgNaoLida }}</span><br>
+        <span *ngIf="options.msgNaoLidas > 0" class="badge circle green white-text span-notificacao">{{
+            options.msgNaoLidas }}</span>
+    </div>
+</div>
