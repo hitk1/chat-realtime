@@ -36,6 +36,7 @@ defmodule Starlink.Sockets do
             case InitUserSession.call(user, self()) do
               {:ok, _} ->
                 %{id: user_id} = user
+
                 InvokeGetUnreceivedMessages.call(user_id)
 
                 {:reply, {:text, SocketEncoder.call("auth", Jason.encode!(%{token: jwt}))}, state}
@@ -53,7 +54,9 @@ defmodule Starlink.Sockets do
           %{"data" => %{"to" => to_user, "message" => message}, "auth" => from} = json
 
           with {:ok, message_id} <- DirectMessage.call(from, to_user, message) do
-            {:reply, {:text, message_id}, state}
+            {:reply,
+             {:text, SocketEncoder.call("direct", Jason.encode!(%{message_id: message_id}))},
+             state}
           else
             reason ->
               {:reply, {:text, reason}, state}
@@ -63,7 +66,9 @@ defmodule Starlink.Sockets do
           %{"data" => %{"messageId" => message_id}} = json
 
           with {:ok, message} <- UpdateStatusMessage.call(message_id, 1) do
-            {:reply, {:text, message}, state}
+            {:reply,
+             {:text, SocketEncoder.call("direct_received", Jason.encode!(%{message: message}))},
+             state}
           else
             _ -> {:reply, {:text, "Error on update status message"}, state}
           end
@@ -72,7 +77,9 @@ defmodule Starlink.Sockets do
           %{"data" => %{"messageId" => message_id}} = json
 
           with {:ok, message} <- UpdateStatusMessage.call(message_id, 2) do
-            {:reply, {:text, message}, state}
+            {:reply,
+             {:text, SocketEncoder.call("direct_readed", Jason.encode!(%{message: message}))},
+             state}
           else
             _ -> {:reply, {:text, "Error on update status message"}, state}
           end
@@ -89,11 +96,13 @@ defmodule Starlink.Sockets do
   end
 
   def websocket_info({:notify_direct_message, message}, state) do
-    {:reply, {:text, message}, state}
+    {:reply, {:text, SocketEncoder.call("receive_direct", Jason.encode!(message))}, state}
   end
 
   def websocket_info({:notify_unreceived_messages, unreceived_messages}, state) do
-    {:reply, {:text, unreceived_messages}, state}
+    {:reply,
+     {:text, SocketEncoder.call("unreceived_messages", Jason.encode!(unreceived_messages))},
+     state}
   end
 
   # Necessário para os casos de assyncronismo

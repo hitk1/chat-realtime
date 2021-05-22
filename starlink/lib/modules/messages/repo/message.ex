@@ -10,7 +10,7 @@ defmodule Messages.Repo.Message do
 
   schema "messages" do
     field(:message, :string)
-    field(:status, :integer, default: 1)
+    field(:status, :integer, default: 0)
     belongs_to(:from_user, UserModel, foreign_key: :from)
     belongs_to(:to_user, UserModel, foreign_key: :to)
 

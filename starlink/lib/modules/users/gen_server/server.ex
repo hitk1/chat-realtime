@@ -24,9 +24,21 @@ defmodule Users.GenStore do
     {:reply, [state]}
   end
 
-  def handle_cast({:notify_direct_message, %{from: from, message: message}}, state) do
+  def handle_cast(
+        {:notify_direct_message,
+         %{from: from, message_id: message_id, message: message, date: date}},
+        state
+      ) do
     %{pid: pid} = state
-    notification = Poison.encode!(%{from: from, message: message})
+
+    notification =
+      %{
+        from: from,
+        message_id: message_id,
+        message: message,
+        inserted_at: date
+      }
+      |> Poison.encode!()
 
     pid
     |> send({:notify_direct_message, notification})

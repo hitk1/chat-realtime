@@ -1,6 +1,6 @@
 defmodule Messages.Services.CreateMessage do
-  require Logger
   import Ecto.Changeset, only: [traverse_errors: 2]
+  require Logger
 
   alias Shared.Repo
   alias Messages.Repo.Message, as: MessagesModel
@@ -13,7 +13,9 @@ defmodule Messages.Services.CreateMessage do
 
   defp execute(message_changeset) do
     case Repo.insert(message_changeset) do
-      {:ok, result} -> {:ok, result}
+      {:ok, result} ->
+        {:ok, result}
+
       {:error, reason} ->
         reason
         |> get_error()
@@ -33,6 +35,7 @@ defmodule Messages.Services.CreateMessage do
     case reason do
       "does not exist" ->
         {:error, "Rementente inexistente"}
+
       _ ->
         Logger.info(reason)
         {:error, "Ocorreu um erro inesperado"}
@@ -43,6 +46,7 @@ defmodule Messages.Services.CreateMessage do
     case reason do
       "does not exist" ->
         {:error, "Destinatário inexistente"}
+
       _ ->
         Logger.info(reason)
         {:error, "Ocorreu um erro inesperado"}

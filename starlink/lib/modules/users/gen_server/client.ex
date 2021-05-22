@@ -39,10 +39,11 @@ defmodule Users.GenClient do
     # end
   end
 
-  def direct_notification(from, to, message) do
+  def direct_notification(from, to, message_id, message, date) do
     GenServer.cast(
       UserRegistry.via_tuple(to),
-      {:notify_direct_message, %{from: from, message: message}}
+      {:notify_direct_message,
+       %{from: from, message_id: message_id, message: message, date: date}}
     )
   end
 

@@ -14,6 +14,13 @@ defmodule Shared.Plug.Auth do
     end
   end
 
+  def extract_userId_from_token(token) do
+    with {:ok, claims} <- Jwt.verify_signature(token),
+         {:ok, claims} <- Jwt.verify_claims(claims) do
+      Jwt.get_claim(claims, "sub")
+    end
+  end
+
   defp authorize(conn) do
     conn
     |> verify_jwt

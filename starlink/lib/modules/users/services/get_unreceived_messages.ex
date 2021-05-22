@@ -10,9 +10,10 @@ defmodule Users.Services.GetUnreceivedMessages do
 
     query =
       from([message, user] in query,
-        where: message.to == ^user_id and message.status == 0,
+        where: message.to == ^user_id and message.status in [0, 1],
         select: {
           user.phoneNumber,
+          message.id,
           message.message,
           message.inserted_at
         }
@@ -20,17 +21,16 @@ defmodule Users.Services.GetUnreceivedMessages do
 
     result = Repo.all(query)
 
-    IO.inspect(result)
-
     if length(result) > 0 do
       {:ok,
        Enum.map(
          result,
          fn item ->
-           {phoneNumber, message, inserted_at} = item
+           {phoneNumber, message_id, message, inserted_at} = item
 
            %{
              "phoneNumber" => phoneNumber,
+             "message_id" => message_id,
              "message" => message,
              "inserted_at" => inserted_at
            }
