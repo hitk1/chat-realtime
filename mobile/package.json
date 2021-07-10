@@ -20,6 +20,7 @@
     "@unform/core": "2.1.5",
     "@unform/mobile": "2.1.5",
     "axios": "^0.21.1",
+    "events": "^3.3.0",
     "isomorphic-ws": "^4.0.1",
     "react": "17.0.1",
     "react-native": "0.63.4",

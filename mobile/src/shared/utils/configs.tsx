@@ -18,6 +18,6 @@ const defaultHitSlop = {
     left: 25
 }
 
-const apiIP = '192.168.0.111'
+const apiIP = '192.168.0.112'
 
 export { colors, dimensions, apiIP, defaultHitSlop }

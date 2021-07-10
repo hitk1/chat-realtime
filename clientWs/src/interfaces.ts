@@ -1,4 +1,5 @@
 import { CloseEvent } from 'reconnecting-websocket/dist/events'
+import { IDirectPayload } from '../../mobile/src/shared/utils/interfaces'
 
 export interface IWsClientBehavior {
     onClose(reason: CloseEvent): void
@@ -7,7 +8,7 @@ export interface IWsClientBehavior {
 
 export interface IWsClientConnection {
     authenticate(phoneNumber: string): void
-    direct(to: string, message: string): void
+    direct(payload: IDirectPayload): void
     onMessage(data: unknown): void
 }
 

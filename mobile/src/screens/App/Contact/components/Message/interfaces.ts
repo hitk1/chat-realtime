@@ -1,3 +1,5 @@
+import { IMessagesState } from "../../interfaces";
+
 export interface IMessage {
     id: string
     to: string
@@ -6,5 +8,6 @@ export interface IMessage {
 }
 
 export interface IProps {
-    data: IMessage
+    data: IMessagesState,
+    myPhone: string
 }

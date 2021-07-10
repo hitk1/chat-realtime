@@ -9,7 +9,7 @@ export interface IInputElementRef {
     name: string
 }
 
-export interface IInputProps extends TextInputProps{
+export interface IInputProps extends TextInputProps {
     name: string,
     onChangeText?(text: string): void
     rawValue?: string

@@ -1,16 +1,18 @@
 import WebSocket from 'isomorphic-ws'
+// import WebSocket from 'ws'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 import { BasicStruct, IDirectMessage, IWsClientBehavior, IWsClientConnection, WsResponse } from './interfaces'
 import { apiIP } from '../../utils/configs'
+import { IDirectPayload } from '../../utils/interfaces'
 
 export const heartbeatInterval = 10 * 1000
 export const wsTimeout = 15 * 1000
 
 
-export default (onMessage: any): Promise<IWsClientConnection> => {
+export default (): Promise<ReconnectingWebSocket> => {
     return new Promise((resolve, reject) => {
-        
+
         const socket = new ReconnectingWebSocket(
             `ws://${apiIP}:3334/ws`,
             [],
@@ -19,6 +21,7 @@ export default (onMessage: any): Promise<IWsClientConnection> => {
                 connectionTimeout: wsTimeout
             }
         )
+
 
         const auth = (phoneNumber: string) => {
             const json = {
@@ -31,17 +34,8 @@ export default (onMessage: any): Promise<IWsClientConnection> => {
             send(JSON.stringify(json))
         }
 
-        const sendDirect = (to: string, message: string) => {
-            const json = {
-                operation: 'direct',
-                // token,
-                data: {
-                    to,
-                    message
-                }
-            } as BasicStruct<IDirectMessage>
-
-            send(JSON.stringify(json))
+        const sendDirect = (payload: IDirectPayload) => {
+            send(JSON.stringify(payload))
         }
 
         // Private method
@@ -62,18 +56,16 @@ export default (onMessage: any): Promise<IWsClientConnection> => {
 
         const connection = {
             authenticate: auth,
-            direct: sendDirect,
+            direct: sendDirect
         } as IWsClientConnection
 
-        socket.addEventListener("message", ({ data }) => {
-            if (data === 'pong')
-                return
+        // socket.addEventListener("message", ({ data }) => {
+        //     if (data === 'pong')
+        //         return
+        // })
 
-            const { operation, data: wsData } = JSON.parse(data) as { operation: string, data: any }
-            onMessage(operation, wsData)
-        })
-
-        resolve(connection)
+        // resolve(connection)
+        resolve(socket)
 
         //hearbeat function
         socket.addEventListener("open", () => {

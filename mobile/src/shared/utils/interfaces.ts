@@ -12,3 +12,13 @@ export interface IService {
 export interface IContacts extends IContactsResponse {
     id: string
 }
+
+type DirectOperationName = 'direct'
+export interface IDirectPayload {
+    operation: DirectOperationName,
+    auth: string
+    data: {
+        to: string,
+        message: string
+    }
+}

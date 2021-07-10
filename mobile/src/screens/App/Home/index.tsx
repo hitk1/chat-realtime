@@ -16,7 +16,6 @@ import { useAppState } from '../../../hooks/appState';
 import styles from './styles'
 import { dimensions } from '../../../shared/utils/configs'
 
-const { HEIGHT } = dimensions
 const Home: React.FC = ({ }) => {
 	const { firstFetch, setFirstFetch } = useAppState()
 	const { addListener, removeListener, navigate } = useNavigation()
@@ -59,12 +58,12 @@ const Home: React.FC = ({ }) => {
 	}, [])
 
 	const handleGoToMessage = useCallback((contact: IContacts) => {
-		navigate('Contact', { id: contact.id, name: contact.name, phone: contact.phoneNumber })
+		navigate('Contact', { id: contact.id, name: contact.name, phoneNumber: contact.phoneNumber })
 	}, [])
 
 	useEffect(() => {
 		addListener('focus', () => handlePermission())
-		return () => removeListener('focus', () => { })
+		return (() => removeListener('focus', () => { console.log('removeu listener de foco') }))
 	}, [])
 
 	return (

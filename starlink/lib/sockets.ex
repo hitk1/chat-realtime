@@ -51,11 +51,13 @@ defmodule Starlink.Sockets do
           end
 
         "direct" ->
-          %{"data" => %{"to" => to_user, "message" => message}, "auth" => from} = json
+          %{"data" => %{"to" => to_user, "message" => message, "key" => key}, "auth" => from} =
+            json
 
           with {:ok, message_id} <- DirectMessage.call(from, to_user, message) do
             {:reply,
-             {:text, SocketEncoder.call("direct", Jason.encode!(%{message_id: message_id}))},
+             {:text,
+              SocketEncoder.call("direct", Jason.encode!(%{message_id: message_id, key: key}))},
              state}
           else
             reason ->
@@ -96,7 +98,7 @@ defmodule Starlink.Sockets do
   end
 
   def websocket_info({:notify_direct_message, message}, state) do
-    {:reply, {:text, SocketEncoder.call("receive_direct", Jason.encode!(message))}, state}
+    {:reply, {:text, SocketEncoder.call("notify_direct", Jason.encode!(message))}, state}
   end
 
   def websocket_info({:notify_unreceived_messages, unreceived_messages}, state) do

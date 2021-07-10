@@ -7,6 +7,7 @@ const PhoneContext = createContext<IPhoneContext>({} as IPhoneContext)
 
 const PhoneProvider: React.FC = ({ children }) => {
     const [user, setUser] = React.useState<IUser | null>()
+    const [token, setToken] = React.useState('')
 
     React.useEffect(() => {
         const loadStorageDate = async () => {
@@ -25,6 +26,7 @@ const PhoneProvider: React.FC = ({ children }) => {
     const signIn = React.useCallback(async (token: string) => {
         try {
             await AsyncStorage.setItem('@Chat-Realtime:token', token)
+            setToken(token)
         } catch (error) {
             console.log('Erro', error.message)
             throw new Error(error.message)
@@ -52,6 +54,7 @@ const PhoneProvider: React.FC = ({ children }) => {
     return (
         <PhoneContext.Provider value={{
             user: user as IUser,
+            token,
             signIn,
             signOut,
             persistUser
