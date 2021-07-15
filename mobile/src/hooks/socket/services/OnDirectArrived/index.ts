@@ -1,7 +1,9 @@
-import { eMobileEvents, mobileEvent } from '../../../../shared/utils/event'
+import { LinkMessageId } from '../../../../screens/App/Contact/services/LinkMessageId'
 import { IDirectArrivedResponseData } from '../../interfaces'
 
-export const onDirectArrived = ({ key }: IDirectArrivedResponseData) => {
+export const onDirectArrived = async (receivedData: IDirectArrivedResponseData) => {
+    const { key, message_id } = receivedData
+    const linkMessageId = new LinkMessageId()
 
-    mobileEvent.emit(eMobileEvents.ArrivedMessage, key)
+    await linkMessageId.execute(key, message_id)
 }

@@ -84,7 +84,10 @@ const Contact: React.FC = ({ }) => {
         const loadMessagesService = new LoadMessages()
 
         loadMessagesService.execute(phoneNumber)
-            .then(messages => setMessages(messages as any))
+            .then(messages => {
+                console.log(messages)
+                setMessages(messages as any)
+            })
 
     }, [])
 

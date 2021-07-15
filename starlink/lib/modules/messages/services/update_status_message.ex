@@ -4,6 +4,7 @@ defmodule Messages.Services.UpdateStatusMessage do
 
   alias Shared.Repo
   alias Messages.Repo.Message, as: MessageModel
+  alias Notifications.Services.ReceiveDirectNotifications
 
   def call(message_id, status) do
     from(message in MessageModel,
@@ -12,7 +13,23 @@ defmodule Messages.Services.UpdateStatusMessage do
     )
     |> Repo.update_all([])
 
-    Logger.info("Message status updated successfully!")
+    message =
+      from(m in MessageModel,
+        where: m.id == ^message_id
+      )
+      |> Repo.all()
+
+    %{from: sender} = Enum.at(message, 0)
+
+    Task.start(
+      ReceiveDirectNotifications,
+      :call,
+      [
+        sender,
+        message_id
+      ]
+    )
+
     {:ok, "Message status updated successfully!"}
   end
 end

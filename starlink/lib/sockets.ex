@@ -107,6 +107,10 @@ defmodule Starlink.Sockets do
      state}
   end
 
+  def websocket_info({:notify_received_direct, message}, state) do
+    {:reply, {:text, SocketEncoder.call("notify_received", message)}, state}
+  end
+
   # Necessário para os casos de assyncronismo
   def websocket_info({:EXIT, _, _}, state) do
     {:ok, state}

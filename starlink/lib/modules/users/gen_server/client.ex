@@ -26,17 +26,6 @@ defmodule Users.GenClient do
     else
       GenServer.cast(UserRegistry.via_tuple(user_id), {:update_pid, pid})
     end
-
-    # cond do
-    #   nil -> GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
-    #   not -> GenServer.cast(UserRegistry.via_tuple(user_id), {:update_pid, pid})
-    # end
-
-    # with nil <- GenServer.whereis(Users.Registry.via_tuple(user_id)) do
-    #   GenServer.start_link(Users.GenStore, state, name: Users.Registry.via_tuple(user_id))
-    # else
-    #   _ -> Logger.info("Usuário já conectado")
-    # end
   end
 
   def direct_notification(from, to, message_id, message, date) do
@@ -44,6 +33,13 @@ defmodule Users.GenClient do
       UserRegistry.via_tuple(to),
       {:notify_direct_message,
        %{from: from, message_id: message_id, message: message, date: date}}
+    )
+  end
+
+  def receive_direct_notification(sender, message_id) do
+    GenServer.cast(
+      UserRegistry.via_tuple(sender),
+      {:notify_received_direct, %{message_id: message_id}}
     )
   end
 

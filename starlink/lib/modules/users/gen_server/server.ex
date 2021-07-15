@@ -19,7 +19,7 @@ defmodule Users.GenStore do
     {:ok, initial_state}
   end
 
-  def handle_cast({:get_user, user_id}, state) do
+  def handle_cast({:get_user, _user_id}, state) do
     # Here goes the logic to find user and return him
     {:reply, [state]}
   end
@@ -42,6 +42,27 @@ defmodule Users.GenStore do
 
     pid
     |> send({:notify_direct_message, notification})
+
+    {:noreply, state}
+  end
+
+  def handle_cast(
+        {
+          :notify_received_direct,
+          %{message_id: message_id}
+        },
+        state
+      ) do
+    %{pid: pid} = state
+
+    IO.inspect("passou aqui")
+
+    payload =
+      %{message_id: message_id}
+      |> Poison.encode!()
+
+    pid
+    |> send({:notify_received_direct, payload})
 
     {:noreply, state}
   end

@@ -9,6 +9,7 @@ import { BasicStruct } from '../../shared/services/WebSocket/interfaces'
 import { ISocketContext } from './interfaces'
 import { onDirectArrived } from './services/OnDirectArrived'
 import { onReceiveDirect } from './services/onReceivedDirect'
+import { onNotifyReceiveDirect } from './services/onNotifyReceiveDirect'
 
 const SocketContext = createContext({} as ISocketContext)
 
@@ -58,9 +59,13 @@ const SocketProvider: React.FC = ({ children }) => {
                 case "direct":
                     onDirectArrived(JSON.parse(wsData))
                     break;
-
                 case "notify_direct":
                     onReceiveDirect(user.phoneNumber, JSON.parse(wsData))
+                    break
+                case "notify_received":
+                    onNotifyReceiveDirect(JSON.parse(wsData))
+                    break
+
 
                 default: break
             }
