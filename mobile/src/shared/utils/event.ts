@@ -1,7 +1,8 @@
 import EventEmitter from 'events'
 
 enum eMobileEvents {
-    ArrivedMessage = "updateArrivedMessage"
+    ArrivedMessage = "updateArrivedMessage",
+    ReceiveDirect = "receiveDirect"
 }
 
 

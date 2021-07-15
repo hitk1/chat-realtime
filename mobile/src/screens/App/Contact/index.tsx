@@ -21,6 +21,7 @@ import { usePhoneAuth } from '../../../hooks/phone';
 import { LoadMessages } from './services/LoadMessages';
 import { CreateMessage } from './services/CreateMessage';
 import MessagesModel from '../../../shared/infra/database/models/Messages';
+import { eMobileEvents, mobileEvent } from '../../../shared/utils/event';
 
 const Contact: React.FC = ({ }) => {
     const { params } = useRoute()
@@ -85,6 +86,14 @@ const Contact: React.FC = ({ }) => {
         loadMessagesService.execute(phoneNumber)
             .then(messages => setMessages(messages as any))
 
+    }, [])
+
+    useEffect(() => {
+        mobileEvent.on(eMobileEvents.ReceiveDirect, data => pushNewMessageToMessagesState(data))
+
+        return () => {
+            mobileEvent.removeAllListeners(eMobileEvents.ReceiveDirect)
+        }
     }, [])
 
     return (
